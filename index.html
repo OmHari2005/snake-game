@@ -11,10 +11,18 @@
 <body>
     <div class="game-container">
         <div id="game-board"></div>
+
+        <div class="controls">
+            <button data-direction="UP">⬆️</button>
+
+            <div>
+                <button data-direction="LEFT">⬅️</button>
+                <button data-direction="DOWN">⬇️</button>
+                <button data-direction="RIGHT">➡️</button>
+            </div>
+        </div>
     </div>
-    <!-- type is used to specify the type of script being used. In this case, "module" indicates that the script
-     is an ES6 module, which allows for the use of import and export statements. This is important for
-      organizing code into separate files and reusing code across different parts of the application.  -->
+
     <script type="module" src="./js/main.js"></script>
 </body>
 

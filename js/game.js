@@ -1,4 +1,5 @@
 import { Snake } from './snake.js';
+import { createFood } from './food.js';
 
 export class Game {
     constructor() {
@@ -10,6 +11,8 @@ export class Game {
         this.running = true;
 
         this.snake = new Snake();
+
+        this.food = createFood(this.snake.getBody(), this.rows, this.columns);
     }
 
     setDirection(direction) {
@@ -20,9 +23,11 @@ export class Game {
             RIGHT: 'LEFT'
         };
 
-        if (opposite[this.direction] !== direction) {
-            this.nextDirection = direction;
+        if (opposite[this.direction] === direction) {
+            return;
         }
+
+        this.nextDirection = direction;
     }
 
     update() {

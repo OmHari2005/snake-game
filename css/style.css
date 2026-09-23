@@ -58,3 +58,32 @@ assiging body to display flex and centering the content horizontally and vertica
 .head {
     background: darkgreen;
 }
+
+.food {
+    background: red;
+    border-radius: 50%;
+}
+
+button {
+    padding: 10px 15px;
+
+    border: none;
+    border-radius: 6px;
+
+    cursor: pointer;
+}
+
+.controls {
+    margin-top: 20px;
+
+    text-align: center;
+}
+
+.controls button {
+    margin: 3px;
+
+    width: 50px;
+    height: 45px;
+
+    font-size: 20px;
+}
