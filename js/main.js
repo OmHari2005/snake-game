@@ -1,31 +1,78 @@
-const board = document.querySelector("#game-board");
+import { Game } from './game.js';
+
+const board = document.getElementById('game-board');
+
+let game;
+let intervalId = null;
 
 const createBoard = () => {
-  if (!board) {
-    console.error("Game board element not found");
-    return;
-  }
+    if (!board || !game) return;
 
-  board.innerHTML = "";
+    board.innerHTML = '';
 
-  for (let i = 0; i < 20; i++) {
-    for (let j = 0; j < 20; j++) {
-      const cell = document.createElement("div");
-      cell.classList.add("cell");
-      cell.dataset.x = String(i);
-      cell.dataset.y = String(j);
-      board.appendChild(cell);
+    for (let y = 0; y < game.rows; y++) {
+        for (let x = 0; x < game.columns; x++) {
+            const cell = document.createElement('div');
+            cell.classList.add('cell');
+            cell.dataset.x = x;
+            cell.dataset.y = y;
+            board.appendChild(cell);
+        }
     }
-  }
 };
 
 const render = () => {
-  console.log("Board Rendered");
+    if (!board || !game) return;
+
+    board.querySelectorAll('.cell').forEach((cell) => {
+        cell.classList.remove('snake', 'head');
+    });
+
+    game.snake.getBody().forEach((segment, index) => {
+        const cell = board.querySelector(`[data-x="${segment.x}"][data-y="${segment.y}"]`);
+
+        if (!cell) return;
+
+        cell.classList.add('snake');
+
+        if (index === 0) {
+            cell.classList.add('head');
+        }
+    });
 };
 
 const startGame = () => {
-  createBoard();
-  render();
+    game = new Game();
+    createBoard();
+    render();
+
+    if (intervalId) {
+        clearInterval(intervalId);
+    }
+
+    intervalId = setInterval(() => {
+        game.update();
+        render();
+    }, game.speed);
 };
+
+document.addEventListener('keydown', (event) => {
+    const directionMap = {
+        ArrowUp: 'UP',
+        ArrowDown: 'DOWN',
+        ArrowLeft: 'LEFT',
+        ArrowRight: 'RIGHT',
+        w: 'UP',
+        s: 'DOWN',
+        a: 'LEFT',
+        d: 'RIGHT'
+    };
+
+    const direction = directionMap[event.key];
+
+    if (direction && game) {
+        game.setDirection(direction);
+    }
+});
 
 startGame();
